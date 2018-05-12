@@ -1,0 +1,4 @@
+!define TEST_SYSTEM {slim}
+!path target/dependencies/*.jar
+
+!contents -R2 -g -p -f -h
