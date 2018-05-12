@@ -1,7 +1,52 @@
-<test page>
+!3 Http Verbs
 
-| Import |
-| smartrics.rest.fitnesse.fixture |
+|Import                         |
+|smartrics.rest.fitnesse.fixture|
 
-| Table: Rest Fixture | http://jsonplaceholder.typicode.com/ |
-| GET | /users | 200 | Content-Type : application/json; charset=utf-8 | jsonbody.length == 10|
+|Table: Rest Fixture Config         |hide-long-content|
+|restfixture.display.actual.on.right|false            |
+
+Existing resources deliver data
+
+|Table: Rest Fixture|http://jsonplaceholder.typicode.com/|hide-long-content                                                       |
+|GET                |/users                              |200|Content-Type : application/json; charset=utf-8|jsonbody.length == 10|
+|GET                |/users/1                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 1     |
+|GET                |/users/2                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 2     |
+|GET                |/users/3                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 3     |
+|GET                |/users/4                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 4     |
+|GET                |/users/5                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 5     |
+|GET                |/users/6                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 6     |
+|GET                |/users/7                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 7     |
+|GET                |/users/8                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 8     |
+|GET                |/users/9                            |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 9     |
+|GET                |/users/10                           |200|Content-Type : application/json; charset=utf-8|jsonbody.id == 10    |
+
+Non existing paths should return 404 and no content
+
+|Table: Rest Fixture|http://jsonplaceholder.typicode.com/|hide-long-content     |
+|GET                |/non/existing/path                  |404|Content-Length: 2||
+
+Deleting a resource works
+
+|Table: Rest Fixture|http://jsonplaceholder.typicode.com/|hide-long-content                                    |
+|DELETE             |/users/1                            |2\d\d|Content-Type : application/json; charset=utf-8||
+
+Adding a resource works
+
+|Table: Rest Fixture|http://jsonplaceholder.typicode.com/|hide-long-content|
+|setBody                                                                   |{!-
+-!"name": "Tester Mctestington",!-
+-!    "username": "tmctestington",!-
+-!    "email": "tester@mctestington.de",!-
+-!} |
+|POST|/users/|2\d\d|Content-Type : application/json; charset=utf-8|jsonbody.id == 11|
+
+Updating a resource works
+
+|Table: Rest Fixture|http://jsonplaceholder.typicode.com/|hide-long-content|
+|setBody                                                                   |{!-
+-!"name": "Tester Mctestington",!-
+-!    "username": "tmctestington",!-
+-!    "email": "tester@mctestington.de",!-
+-!} |
+|PUT|/users/3|2\d\d|Content-Type : application/json; charset=utf-8|jsonbody.id == 3|
