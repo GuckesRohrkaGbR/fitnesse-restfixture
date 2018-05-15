@@ -10,6 +10,6 @@ VOLUME c:\fitnesse\src\main\resources
 VOLUME c:\fitnesse\src\test\java
 WORKDIR c:\fitnesse
 
-RUN ./mvnw clean install
+RUN .\mvnw.bat clean install
 
 ENTRYPOINT ["c:\fitnesse\start.bat"]
