@@ -1,0 +1,15 @@
+FROM openjdk:8-jdk-nanoserver
+MAINTAINER Christopher Guckes <christopher.guckes@torq-dev.de>
+
+RUN md c:\fitnesse
+RUN md c:\fitnesse-initial
+ADD . c:\fitnesse
+ADD ./src/main/resources c:\fitnesse-initial
+
+VOLUME c:\fitnesse\src\main\resources
+VOLUME c:\fitnesse\src\test\java
+WORKDIR c:\fitnesse
+
+RUN ./mvnw clean install
+
+ENTRYPOINT ["c:\fitnesse\start.bat"]
